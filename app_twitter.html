@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!-- Include the compiled Ratchet CSS -->
+    <link href="ratchet.css" rel="stylesheet">
+
+    <!-- Include the compiled Ratchet JS -->
+    <script src="ratchet.js"></script>
+    <script src="ratchet-theme-ios.css"></script>
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    
+
+    
+    
+    <title>Safe Path</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+   
+    <style>
+    
+      .tab-label {
+        font-size: 20px;
+        
+      }      
+      .glyphicon {
+        font-size: 35px;
+      }
+    </style>
+    
+  </head>
+  
+
+  
+  <body>  
+
+    <!-- Make sure all your bars are the first things in your <body> -->
+
+
+        <header class="bar bar-nav">
+         <h1 class="title">SFPD Twitter</h1>
+        </header>
+
+
+    <nav class="bar bar-tab">
+        <a href="app1.html" class="tab-item" data-ignore="push">
+            <span class="glyphicon glyphicon-map-marker"></span>
+        </a>
+        <a href="app_twitter.html" class="tab-item active" data-ignore="push">
+            <img src="twitter-512.png">
+        </a>
+         <a href="app_emergency.html" class="tab-item" data-ignore="push">
+            <span class="glyphicon glyphicon-earphone"></span>
+
+        </a>
+    </nav>
+    
+    <div id="" style="overflow-y: scroll; height:700px;" >
+    
+    <a class="twitter-timeline" href="https://twitter.com/SFPD">Tweets by SFPD</a> 
+    <script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    
+    </div>
+
+
+    
+  </body>
+</html>
