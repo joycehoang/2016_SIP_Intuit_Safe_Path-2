@@ -4,7 +4,14 @@
     <meta charset="utf-8">
 
     <!-- Sets initial viewport load and disables zooming  -->
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="initial-scale=1;">
+    <style>
+       #map {
+        width: 100%;
+        height: 600px;
+          }
+    </style>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
 
     <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -39,23 +46,16 @@
         
       }
       html, body {
-        height: 100%;
+        overflow: hidden;
+        overflow: scroll;
         margin: 0;
       }
       
       #map {
-        height: 95%;
+        height: 650px;
+        margin: 0px;
       }
-      .controls {
-        margin-top: 50px;
-        border: 10px solid transparent;
-        border-radius: 2px 0 0 2px;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        height: 32px;
-        outline: none;
-        box-shadow: 0 7px 6px rgba(0, 0, 0, 0.3);
-      }
+
 
       #pac-input:focus {
         border-color: #4d90fe;
@@ -86,6 +86,117 @@
       .glyphicon {
         font-size: 35px;
       }
+      
+      .infoheader {
+      font-family: 'Open Sans Condensed', sans-serif;
+   font-size: 15px;
+   font-weight: 200;
+   padding: 5px;
+   background-color: black;
+   color: white;
+   margin: 1px;
+   
+}
+
+
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 5px 5px;
+}
+  
+.btn-sm {
+  font-size: 14px;
+  line-height: 1.33;
+  border-radius: 6px;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #3276b1;
+  border-color: #285e8e;
+}
+
+/***********************
+  OUTLINE BUTTONS
+************************/
+
+.btn.outline {
+    background: none;
+    padding: 3px 5px;
+}
+.btn-primary.outline {
+    border: 1px solid #DCD0C0;
+    color: #DCD0C0;
+}
+.btn-primary.outline:hover, .btn-primary.outline:focus, .btn-primary.outline:active, .btn-primary.outline.active, .open > .dropdown-toggle.btn-primary {
+    color: #DCD0C0;
+    border-color: #DCD0C0;
+}
+.btn-primary.outline:active, .btn-primary.outline.active {
+    border-color: #DCD0C0;
+    color: #DCD0C0;
+    box-shadow: none;
+}
+
+/***********************
+  CUSTON BTN VALUES
+************************/
+
+.btn {
+    padding: 14px 24px;
+    border: 0 none;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+}
+
+#getposbtn {
+    font-size: 10px;
+
+}
+
+
+#getposbtn2 {
+    font-size: 10px;
+
+}
+
+a {
+    color: #DCD0C0;
+
+}
+
+
+
     </style>
     
   </head>
@@ -99,14 +210,260 @@
          <h1 class="title">Google Maps: San Francisco</h1>
         </header>
 
+<div >
 
-<div style="padding-top:45px;">
-<iframe padding-top="200" src="https://www.google.com/maps/d/u/0/embed?mid=1AqlWi58M02N83obJKM2boJkb-r0&z=15&ll=37.7802834, -122.39146" width="420" height="650"></iframe>
+
+    <div id="map"></div>
+    <script>
+    var map;
+    var directionsDisplay;
+      function initMap() {
+        var myLatLng = {lat: -25.363, lng: 131.044};
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 13,
+          center: new google.maps.LatLng(37.7749, -122.4194),
+          mapTypeId: google.maps.MapTypeId.MAP
+        }); 
+
+          directionsDisplay = new google.maps.DirectionsRenderer;
+          directionsDisplay.setMap(map);
+            directionsDisplay.setOptions({draggable: true});
+
+          
+        var infowindow = new google.maps.InfoWindow();
+
+        var marker, i;        
+        
+    	var icons = {
+          ASSAULT: {
+            icon: 'fists.png'
+          },
+          "NON-CRIMINAL": {
+            icon: 'noncrimr.png'
+          },
+          "OTHER OFFENSES": {
+            icon: 'noncrimr.png'
+          },
+          FRAUD: {
+            icon: 'burger.png'
+          },
+          "LARCENY/THEFT": {
+            icon: 'burger.png'
+          },
+          VANDALISM: {
+            icon: 'vand2r.png'
+          },
+          WARRANTS: {
+            icon: 'noncrimr.png'
+          },
+          "VEHICLE THEFT": {
+            icon: 'cart.png'
+          },
+          "SUSPICIOUS OCC": {
+            icon: 'spy1.png'
+          },
+          "DRUG/NARCOTIC": {
+            icon: 'drugs.png'
+          },
+          "BURGLARY": {
+            icon: 'burger.png'
+          },
+          "MISSING PERSON": {
+            icon: 'color.png'
+          },
+          "ROBBERY": {
+            icon: 'burger.png'
+          },
+          "TRESPASS": {
+            icon: 'tres1.png'
+          },
+          "WEAPON LAWS": {
+            icon: 'gunner.png'
+          },
+          "SECONDARY CODES": {
+            icon: 'fists.png'
+          },
+          "STOLEN PROPERTY": {
+            icon: 'burger.png'
+          },
+          "SEX OFFENSES, FORCIBLE": {
+            icon: 'sassy.png'
+          },
+          "RECOVERED VEHICLE": {
+            icon: 'burger.png'
+          },
+          "DRUNKENNESS": {
+            icon: 'drunky.png'
+          },
+        "default": {
+            icon: "noncrimr.png"
+        }
+        };
+
+                // 'JSON' data included as above
+                var data = $.getJSON("data.json", function(json) {
+                  var locations = (json["data"]); 
+                  var i;
+
+                  for(i = 0; i < 1000; i++) {
+
+                      
+                      var icon = icons[locations[i][9]]
+                      if (icon == null) {
+                          icon = icons["default"].icon;
+                      } else {
+                          icon = icon.icon;
+                      }
+                      
+                    marker = new google.maps.Marker({
+                      position: new google.maps.LatLng(locations[i][18], locations[i][17]),
+                      map: map,
+                      icon: icon
+                    });
+                    
+                      
+                    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                      return function() {
+                        infowindow.setContent(
+'<h4 class="infoheader">' + 
+                        locations[i][9] + '<div> </div>' +
+'</h4>' + '<p class="infotext">' +
+                        locations[i][10] + '<div> </div>' +
+                        'Day of Week: ' + locations[i][11] + '<div> </div>' +
+                        'Date: ' + locations[i][12] + '<div> </div>' +
+                        'Time: ' + locations[i][13] + '<div> </div>' +
+                        'City District: ' + locations[i][14] + '<div> </div>' +
+                        'Address: ' + locations[i][16] + '<div> </div>' +
+                        'Longitude: ' + locations[i][17] + '<div> </div>' +
+                        'Latitude: ' + locations[i][18] + '<div> </div>' +
+                    
+'<p>'                   
+                        
+                        );
+                        infowindow.open(map, marker);
+                      }
+                    })(marker, i)); 
+                  }                             
+                });
+
+          
+      }
+        
+        function calculateRoute(from, to) {
+
+            directionsDisplay.setMap(null);
+
+        var directionsService = new google.maps.DirectionsService();
+        var directionsRequest = {
+          origin: from,
+          destination: to,
+          travelMode: google.maps.DirectionsTravelMode.WALKING,
+          unitSystem: google.maps.UnitSystem.METRIC,
+          provideRouteAlternatives : true
+        };
+    
+            
+        directionsService.route(
+          directionsRequest,
+          function(response, status)
+          {
+            if (status == google.maps.DirectionsStatus.OK)
+            {
+                directionsDisplay.setMap(map);
+                directionsDisplay.setDirections(response);                
+
+            }
+            else
+              $("#error").append("Unable to retrieve your route<br />");
+          }
+        );
+      }
+
+      $(document).ready(function() {
+        // If the browser supports the Geolocation API
+        if (typeof navigator.geolocation == "undefined") {
+          $("#error").text("Your browser doesn't support the Geolocation API");
+          return;
+        }
+
+        $("#from-link, #to-link").click(function(event) {
+          event.preventDefault();
+          var addressId = this.id.substring(0, this.id.indexOf("-"));
+
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({
+              "location": new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+            },
+            function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK)
+                $("#" + addressId).val(results[0].formatted_address);
+              else
+                $("#error").append("Unable to retrieve your address<br />");
+            });
+          },
+          function(positionError){
+            $("#error").append("Error: " + positionError.message + "<br />");
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 10 * 1000 // 10 seconds
+          });
+        });
+
+        $("#calculate-route").submit(function(event) {
+          event.preventDefault();
+          calculateRoute($("#from").val(), $("#to").val());
+        });
+      });
+        
+    </script>
+    <script 
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7d1aWB8cwFPESkkY3XMDFwG0by3kZSsY&callback=initMap" async defer>
+    </script>
+    
+    <div style="background-color: #373737; padding-top: 1px" align="middle">
+    <h4 style="color: #DCD0C0;" > SCROLL DOWN FOR DIRECTIONS
+    </h4>
+    
+    
+    <form style="overflow-y:scroll; height:340px;" id="calculate-route" name="calculate-route" action="#" method="get">
+<div  style="padding-left: 10px;" align="left" >
+      <label style="color: #DCD0C0;" for="from">From:</label>
 </div>
+      <input type="text" id="from" name="from" required="required" placeholder="An address" size="30" />
+<div  style="padding-left: 10px;" align="left" >
+      <button id="getposbtn" class="btn btn-primary btn-sm outline"> 
+      <a id="from-link" href="#">Get my position</a>
+      </button>
+</div>
+      <br />
+<div  style="padding-left: 10px;" align="left" >
+      <label style="color: #DCD0C0;" for="to">To:</label>
+</div>
+      <input type="text" id="to" name="to" required="required" placeholder="Another address" size="30" />
+<div  style="padding-left: 10px;" align="left" >
+      <button id="getposbtn2" class="btn btn-primary btn-sm outline"> <a id="to-link" href="#">Get my position</a> </button>
+</div>
+      <br />
     
-    <img onclick="location.href = 'Legend.html';" width="40px" height="40px" style="position: absolute;left: 370px;top: 630px;z-index: 1;" src="https://cdn2.iconfinder.com/data/icons/windows-8-metro-style/128/info.png">
+    <button class="btn btn-primary btn-sm outline" type="button" style="color: #DCD0C0;" >
+      <input type="submit" />
+    </button>
     
     
+    <button class="btn btn-primary btn-sm outline" type="button" style="color: #DCD0C0;" >
+      <input type="reset" />
+    </button>
+    </form>
+    
+    </div>
+    
+    <img onclick="location.href = 'Legend.html';" width="40px" height="40px" style="position: absolute;left: 370px;top: 50px;z-index: 1;" src="https://cdn2.iconfinder.com/data/icons/windows-8-metro-style/128/info.png">
+    
+</div>
+
+  
     <nav class="bar bar-tab">
         <a href="app1.html" class="tab-item active" data-ignore="push">
             <span class="glyphicon glyphicon-map-marker"></span>
@@ -122,7 +479,6 @@
     
     
     
- 
     
   </body>
 </html>
